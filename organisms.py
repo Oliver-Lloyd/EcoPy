@@ -16,10 +16,10 @@ class Animal:
         else:
             self.sex = 'm'
         if parents is None:
-            self.quality = np.random.normal(0.5, 0.95/6, 1)
+            self.quality = np.random.normal(0.5, 0.95/6, 1)[0]
         elif len(parents) == 2:
             parents_quality = (parents[0].quality + parents[1].quality)/2
-            self.quality = np.random.normal(parents_quality, 0.95/6, 1)
+            self.quality = np.random.normal(parents_quality, 0.95/6, 1)[0]
 
         self.age = 0
         self.energy = 0.5
@@ -79,3 +79,18 @@ class Animal:
         # Decrease food value of animal after death
         if not self.alive:
             self.rot += rot_rate
+
+
+class Cat(Animal):
+    def __init__(self, position, size, alive=True, parents=None, sex_ratio=0.5):
+        super().__init__(self, 'Cat', 'c', position, size,  alive, parents, sex_ratio)
+
+
+class Rat(Animal):
+    def __init__(self, position, size, alive=True, parents=None, sex_ratio=0.5):
+        super().__init__(self, 'Rat', 'o', position, size,  alive, parents, sex_ratio)
+
+
+class Horse(Animal):
+    def __init__(self, position, size, alive=True, parents=None, sex_ratio=0.5):
+        super().__init__(self, 'Horse', 'h', position, size,  alive, parents, sex_ratio)
