@@ -83,14 +83,14 @@ class Animal:
 
 class Cat(Animal):
     def __init__(self, position, size, alive=True, parents=None, sex_ratio=0.5):
-        super().__init__(self, 'Cat', 'c', position, size,  alive, parents, sex_ratio)
+        super().__init__('Cat', 'c', position, size,  alive, parents, sex_ratio)
 
 
 class Rat(Animal):
     def __init__(self, position, size, alive=True, parents=None, sex_ratio=0.5):
-        super().__init__(self, 'Rat', 'o', position, size,  alive, parents, sex_ratio)
+        super().__init__('Rat', 'o', position, size,  alive, parents, sex_ratio)
 
 
 class Horse(Animal):
     def __init__(self, position, size, alive=True, parents=None, sex_ratio=0.5):
-        super().__init__(self, 'Horse', 'h', position, size,  alive, parents, sex_ratio)
+        super().__init__('Horse', 'h', position, size,  alive, parents, sex_ratio)
