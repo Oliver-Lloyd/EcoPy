@@ -26,7 +26,11 @@ class Animal:
         self.stress = 0
         self.mated_recently = False
         self.food_type = 'meat'
+        self.food_value = self.size
         self.pregnant = False
+        self.food_value = size
+        self.rot_amount = 0
+        self.reach = self.size/5
 
     def mate(self, target):
         if self.alive and target.alive and self.species == target.species:
@@ -42,17 +46,20 @@ class Animal:
             else:
                 self.socialise(target, intercourse=True)
 
-    def eat(self, target):
+    def eat(self, target, dict, key):
         # Eats the target food if it is a diet match and
         if self.diet == 'o':
-            self.energy += target.size * (1-target.rot)
-            del target
+            self.energy += target.food_value
+            self.energy = min(1, self.energy)
+            dict.pop(key)
         elif self.diet == 'c' and target.food_type == 'meat':
-            self.energy += target.size * (1 - target.rot)
-            del target
+            self.energy += target.food_value
+            self.energy = min(1, self.energy)
+            dict.pop(key)
         elif self.diet == 'h' and target.food_type == 'plant':
-            self.energy += target.size * (1 - target.rot)
-            del target
+            self.energy += target.food_value
+            self.energy = min(1, self.energy)
+            dict.pop(key)
 
     def socialise(self, target, intercourse=False):
         # After a stress-proportional threshold is met, the stress levels of two intraspecific animals is reduced
@@ -78,7 +85,8 @@ class Animal:
     def rot(self, rot_rate):
         # Decrease food value of animal after death
         if not self.alive:
-            self.rot += rot_rate
+            self.rot_amount += rot_rate
+            self.food_value = self.size * (1-self.rot_amount)
 
 
 class Cat(Animal):
