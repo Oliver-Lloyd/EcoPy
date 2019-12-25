@@ -2,6 +2,7 @@ major:
 - Create plant class
     - Could perhaps inherit from an 'organism' superclass (so could animal class)
 - Create main.py for running the simulation loop
+    - Animals should age gradually, then die in a normal distribution centered on their median death age
 - Animals need to move gradually over ticks, not teleport
     - Movement speed should be modified by animal quality and terrain
 - Create map class
@@ -9,13 +10,15 @@ major:
 - Set up pregnancy effects
     - After certain time, pregnancy = False and create new animal object(s)
     - Amount of energy obtained by food is reduced by a modifier (gotta feed the baby too)
+- Eating an object shouldn't automatically delete it, the target's food_value decrease and actor's energy gain should be proportional to the size of them both.
 
 
 minor:
-- Use set instead of dict for animal list ?
 - Organisms should not be able to occupy the same space as one another
     - If animals are nearby, interact by socialising, fighting or ignoring
 - Create fighting method
 - Create hunting method
+    - Carnivore class might be worth creating, which inherits from animal and is the superclass to carnivore species
 - Do the animals need sexualities or should they all be left as bi
-- Rotting of a corpse should improve the nutrients available in the surrounding groud
+- Rotting of a corpse should gradually improve the nutrients available in the surrounding ground
+- If
