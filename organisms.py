@@ -46,20 +46,20 @@ class Animal:
             else:
                 self.socialise(target, intercourse=True)
 
-    def eat(self, target, dict, key):
+    def eat(self, target, target_dict, key):
         # Eats the target food if it is a diet match and
         if self.diet == 'o':
             self.energy += target.food_value
             self.energy = min(1, self.energy)
-            dict.pop(key)
+            target_dict.pop(key)
         elif self.diet == 'c' and target.food_type == 'meat':
             self.energy += target.food_value
             self.energy = min(1, self.energy)
-            dict.pop(key)
+            target_dict.pop(key)
         elif self.diet == 'h' and target.food_type == 'plant':
             self.energy += target.food_value
             self.energy = min(1, self.energy)
-            dict.pop(key)
+            target_dict.pop(key)
 
     def socialise(self, target, intercourse=False):
         # After a stress-proportional threshold is met, the stress levels of two intraspecific animals is reduced
