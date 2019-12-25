@@ -1,35 +1,52 @@
 import numpy as np
 
 
-class Animal:
+class Organism:
+    def __init__(self, species, diet, position, size, alive=True, parents=None):
+        self.species = species
+        self.position = position
+        self.size = size  # Could make this between 0-1, 1 for biggest organism
+        self.alive = alive
+        # Set organism quality
+        if parents is None:
+            self.quality = np.random.normal(0.5, 0.95 / 6, 1)[0]
+        elif len(parents) == 2:
+            parents_quality = (parents[0].quality + parents[1].quality) / 2
+            self.quality = np.random.normal(parents_quality, 0.95 / 6, 1)[0]
+        self.age = 0
+        self.energy = 0.5
+        self.stress = 0
+        self.food_value = self.size
+        self.rot_amount = 0
+
+    def die(self):
+        # Kills an animal, but keeps corpse around
+        self.alive = False
+
+    def rot(self, rot_rate, object_set):
+        # Decrease food value of animal after death
+        if not self.alive:
+            self.rot_amount += rot_rate
+            self.food_value = self.size * (1-self.rot_amount)
+        if self.rot_amount >= 100:
+            object_set.pop(self)
+
+
+class Animal(Organism):
     """
     Blueprint for animals.
     """
     def __init__(self, species, diet, position, size, alive=True, parents=None, sex_ratio=0.5):
-        self.species = species
-        self.position = position
-        self.size = size  # Could make this between 0-1, 1 for biggest animal
-        self.diet = diet  # 'h'erbivore, 'c'arnivore, or 'o'mnivore
-        self.alive = alive
+        super().__init__(species, diet, position, size, alive, parents)
+        # Set animal sex
         if np.random.uniform(0, 1) >= sex_ratio:
             self.sex = 'f'
         else:
             self.sex = 'm'
-        if parents is None:
-            self.quality = np.random.normal(0.5, 0.95/6, 1)[0]
-        elif len(parents) == 2:
-            parents_quality = (parents[0].quality + parents[1].quality)/2
-            self.quality = np.random.normal(parents_quality, 0.95/6, 1)[0]
-
-        self.age = 0
-        self.energy = 0.5
-        self.stress = 0
-        self.mated_recently = False
+        self.diet = diet  # 'h'erbivore, 'c'arnivore, or 'o'mnivore
         self.food_type = 'meat'
-        self.food_value = self.size
+        self.mated_recently = False
         self.pregnant = False
-        self.food_value = size
-        self.rot_amount = 0
         self.reach = self.size/5
 
     def mate(self, target):
@@ -77,18 +94,6 @@ class Animal:
         # Note: rework this to have species and quality modifiers to speed/food cost
         distance = np.linalg.norm(target_loc-self.position)
         self.energy -= (distance/map_size)*terrain_modifier
-
-    def die(self):
-        # Kills an animal, but keeps corpse around
-        self.alive = False
-
-    def rot(self, rot_rate, object_set):
-        # Decrease food value of animal after death
-        if not self.alive:
-            self.rot_amount += rot_rate
-            self.food_value = self.size * (1-self.rot_amount)
-        if self.rot_amount >= 100:
-            object_set.pop(self)
 
 
 class Cat(Animal):
