@@ -22,4 +22,3 @@ minor:
     - Carnivore class might be worth creating, which inherits from animal and is the superclass to carnivore species
 - Do the animals need sexualities or should they all be left as bi
 - Rotting of a corpse should gradually improve the nutrients available in the surrounding ground
-- If
