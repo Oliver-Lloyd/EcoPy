@@ -1,0 +1,21 @@
+major:
+- Create plant class
+    - Could perhaps inherit from an 'organism' superclass (so could animal class)
+- Create main.py for running the simulation loop
+- Animals need to move gradually over ticks, not teleport
+    - Movement speed should be modified by animal quality and terrain
+- Create map class
+    - Could have a standard map, and the ability to randomly generate maps
+- Set up pregnancy effects
+    - After certain time, pregnancy = False and create new animal object(s)
+    - Amount of energy obtained by food is reduced by a modifier (gotta feed the baby too)
+
+
+minor:
+- Use set instead of dict for animal list ?
+- Organisms should not be able to occupy the same space as one another
+    - If animals are nearby, interact by socialising, fighting or ignoring
+- Create fighting method
+- Create hunting method
+- Do the animals need sexualities or should they all be left as bi
+- Rotting of a corpse should improve the nutrients available in the surrounding groud
