@@ -46,20 +46,20 @@ class Animal:
             else:
                 self.socialise(target, intercourse=True)
 
-    def eat(self, target, target_dict, key):
+    def eat(self, target, object_set):
         # Eats the target food if it is a diet match and
         if self.diet == 'o':
             self.energy += target.food_value
             self.energy = min(1, self.energy)
-            target_dict.pop(key)
+            object_set.pop(target)
         elif self.diet == 'c' and target.food_type == 'meat':
             self.energy += target.food_value
             self.energy = min(1, self.energy)
-            target_dict.pop(key)
+            object_set.pop(target)
         elif self.diet == 'h' and target.food_type == 'plant':
             self.energy += target.food_value
             self.energy = min(1, self.energy)
-            target_dict.pop(key)
+            object_set.pop(target)
 
     def socialise(self, target, intercourse=False):
         # After a stress-proportional threshold is met, the stress levels of two intraspecific animals is reduced
@@ -79,14 +79,16 @@ class Animal:
         self.energy -= (distance/map_size)*terrain_modifier
 
     def die(self):
-        # Kills an animal
+        # Kills an animal, but keeps corpse around
         self.alive = False
 
-    def rot(self, rot_rate):
+    def rot(self, rot_rate, object_set):
         # Decrease food value of animal after death
         if not self.alive:
             self.rot_amount += rot_rate
             self.food_value = self.size * (1-self.rot_amount)
+        if self.rot_amount >= 100:
+            object_set.pop(self)
 
 
 class Cat(Animal):
