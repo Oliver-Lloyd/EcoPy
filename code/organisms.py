@@ -2,7 +2,7 @@ import numpy as np
 
 
 class Organism:
-    def __init__(self, species, diet, position, size, alive=True, parents=None):
+    def __init__(self, species, position, size, alive=True, parents=None):
         self.species = species
         self.position = position
         self.size = size  # Could make this between 0-1, 1 for biggest organism
