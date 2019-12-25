@@ -1,2 +1,3 @@
-# EcoPy
-Ecosystem simulator in Python.
+# Life of Py
+
+An ecosystem simulator, implemented in Python.
