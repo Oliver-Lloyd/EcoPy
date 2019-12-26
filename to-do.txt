@@ -1,6 +1,4 @@
 major:
-- Create plant class
-    - Could perhaps inherit from an 'organism' superclass (so could animal class)
 - Create main.py for running the simulation loop
     - Animals should age gradually, then die in a normal distribution centered on their median death age
     - Add events that increase stress (hunger, fights etc)

@@ -109,3 +109,54 @@ class Rat(Animal):
 class Horse(Animal):
     def __init__(self, position, size, alive=True, parents=None, sex_ratio=0.5):
         super().__init__('Horse', 'h', position, size,  alive, parents, sex_ratio)
+
+
+class Plant(Organism):
+    def __init__(self, species, position, alive=True, size=0, spawn_as_seed=True, parents=None):
+        super().__init__(species, position, size, alive, parents)
+        if spawn_as_seed:
+            self.mature = False
+            self.size = 0
+        else:
+            self.mature = True
+            self.size = size
+        self.pollenated = False
+        self.pollenators = []
+        self.food_type = 'plant'
+
+    def grow(self, cost):
+        # add check for population density
+        if self.energy >= cost:
+            self.energy -= cost
+            self.size += cost/10
+
+    def release_pollen(self, cost, plant_set, radius):
+        if self.mature and self.energy >= cost:
+            self.energy -= cost
+            for plant in plant_set:
+                distance = np.linalg.norm(np.array(plant.position)-np.array(self.position))
+                not_self = (plant != self)
+                same_species = (plant.species == self.species)
+                within_radius = (distance <= radius)
+                if not_self and same_species and within_radius:
+                    plant.pollenated = True
+                    plant.pollenators.append(self)
+
+    def release_seeds(self, cost, mean_radius, plant_set):
+        if self.pollenated:
+            self.energy -= cost
+            self.pollenated = False
+            num_seeds = int(cost*10)
+            for _ in range(num_seeds):
+                species = self.species
+                other_parent = np.random.choice(self.pollenators)
+                position = []
+                for coord in self.position:
+                    modifier = np.random.choice([-1, 1])
+                    new_coord = np.random.normal(coord + (modifier*mean_radius), mean_radius/6, 1)
+                    position.append(new_coord[0])
+
+                seed = Plant(species, position, parents=[self, other_parent])
+                plant_set.add(seed)
+
+
