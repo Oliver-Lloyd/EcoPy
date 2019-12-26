@@ -37,7 +37,7 @@ class Animal(Organism):
     Blueprint for animals.
     """
     def __init__(self, species, diet, position, size, alive=True, parents=None, sex_ratio=0.5):
-        super().__init__(species, diet, position, size, alive, parents)
+        super().__init__(species, position, size, alive, parents)
         # Set animal sex
         if np.random.uniform(0, 1) >= sex_ratio:
             self.sex = 'f'
