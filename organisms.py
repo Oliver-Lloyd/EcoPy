@@ -7,7 +7,7 @@ class Organism:
         self.position = position
         self.size = size  # Could make this between 0-1, 1 for biggest organism
         self.alive = alive
-        # Set organism quality
+        # Set organism overall quality
         if parents is None:
             self.quality = np.random.normal(0.5, 0.95 / 6, 1)[0]
         elif len(parents) == 2:
@@ -20,7 +20,7 @@ class Organism:
         self.rot_amount = 0
 
     def die(self):
-        # Kills an animal, but keeps corpse around
+        # Kills an organism but keeps corpse around
         self.alive = False
 
     def rot(self, rot_rate, object_set):
